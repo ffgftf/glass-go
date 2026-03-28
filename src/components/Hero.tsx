@@ -1,6 +1,6 @@
 import heroImage from "@/assets/hero-glass.jpg";
 import { Button } from "@/components/ui/button";
-import { Recycle } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { Link } from "react-router-dom";
 import SignupDialog from "@/components/SignupDialog";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const Hero = () => {
         <div className="relative z-10 container mx-auto px-6 py-20">
           <div className="max-w-2xl space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground animate-fade-up">
-              <Recycle className="w-4 h-4" />
+              <img src={logo} alt="Eko Boko" className="w-6 h-6 object-contain" />
               Recyclage du verre à domicile — Pointe-à-Bacchus
             </div>
 
