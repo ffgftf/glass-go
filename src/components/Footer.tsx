@@ -1,4 +1,5 @@
-import { Recycle, Mail, Phone } from "lucide-react";
+import { Recycle, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -8,19 +9,19 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Recycle className="w-6 h-6 text-accent" />
-              <span className="text-xl font-bold font-display">VerreCollecte</span>
+              <span className="text-xl font-bold font-display">Eko Boko</span>
             </div>
             <p className="text-primary-foreground/60 text-sm leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-              Le service de ramassage de verre à domicile.
-              Recyclez sans effort, nous faisons le reste.
+              Verre aujourd'hui ! Vers demain !<br />
+              Service de ramassage de verre à domicile à Pointe-à-Bacchus.
             </p>
           </div>
 
           <div>
             <h4 className="font-bold mb-4">Liens rapides</h4>
             <ul className="space-y-2 text-primary-foreground/60 text-sm" style={{ fontFamily: "var(--font-body)" }}>
-              <li><a href="#comment-ca-marche" className="hover:text-accent transition-colors">Comment ça marche</a></li>
-              <li><a href="#tarifs" className="hover:text-accent transition-colors">Tarifs</a></li>
+              <li><Link to="/comment-ca-marche" className="hover:text-accent transition-colors">Comment ça marche</Link></li>
+              <li><Link to="/tarifs" className="hover:text-accent transition-colors">Tarifs</Link></li>
             </ul>
           </div>
 
@@ -28,8 +29,12 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Contact</h4>
             <ul className="space-y-3 text-primary-foreground/60 text-sm" style={{ fontFamily: "var(--font-body)" }}>
               <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Pointe-à-Bacchus
+              </li>
+              <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                contact@verrecollecte.fr
+                contact@ekoboko.fr
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4" />
@@ -40,7 +45,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/10 mt-12 pt-8 text-center text-primary-foreground/40 text-sm" style={{ fontFamily: "var(--font-body)" }}>
-          © {new Date().getFullYear()} VerreCollecte. Tous droits réservés.
+          © {new Date().getFullYear()} Eko Boko. Tous droits réservés.
         </div>
       </div>
     </footer>

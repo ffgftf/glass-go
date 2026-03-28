@@ -1,15 +1,17 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
+import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 
-const Index = () => {
+const CommentCaMarche = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <Hero />
+      <div className="pt-16">
+        <HowItWorks />
+      </div>
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default CommentCaMarche;
