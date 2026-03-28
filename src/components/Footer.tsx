@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Eko Boko" className="h-10 w-auto" />
+              <img src={logo} alt="Eko Boko" className="h-14 w-auto" />
             </div>
             <p className="text-primary-foreground/60 text-sm leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
               Verre aujourd'hui ! Vers demain !<br />
