@@ -24,12 +24,34 @@ const plans = [
       "Boîte de collecte fournie",
       "Recyclage garanti",
       "Priorité de ramassage",
+      "2 collectes par mois",
+      "Jusqu'à 50 bouteilles",
+      "Créneau au choix",
+      "Points fidélité ♻️",
+      "Support prioritaire",
       "Économie de 10€/mois",
     ],
     popular: true,
   },
+  {
+    name: "Infini Pro",
+    price: "29,90",
+    period: "/ mois",
+    description: "Idéal restaurants & bars",
+    features: [
+      "Ramassage chaque dimanche",
+      "Boîte de collecte fournie",
+      "Recyclage garanti",
+      "Priorité de ramassage",
+      "Collectes illimitées",
+      "Bouteilles illimitées",
+      "Créneau flexible",
+      "Points fidélité x2 ♻️",
+      "Rapport mensuel",
+    ],
+    popular: false,
+  },
 ];
-
 const Pricing = () => {
   return (
     <section className="py-24 bg-card" id="tarifs">
@@ -43,7 +65,7 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.name}
@@ -90,7 +112,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12 bg-accent/50 rounded-2xl p-6 max-w-3xl mx-auto">
+        <div className="text-center mt-12 bg-accent/50 rounded-2xl p-6 max-w-5xl mx-auto">
           <p className="text-foreground font-semibold mb-1">Frais d'inscription annuels : 10€</p>
           <p className="text-muted-foreground text-sm" style={{ fontFamily: "var(--font-body)" }}>
             Comprend le prêt de la boîte de collecte
