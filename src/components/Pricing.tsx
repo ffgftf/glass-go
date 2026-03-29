@@ -3,7 +3,7 @@ import { Check, Star } from "lucide-react";
 
 const plans = [
   {
-    name: "À la semaine",
+    name: "Basic",
     price: "7,50",
     period: "/ semaine",
     description: "Idéal pour tester le service",
@@ -18,7 +18,7 @@ const plans = [
     popular: false,
   },
   {
-    name: "Abonnement mensuel",
+    name: "Standard",
     price: "19,90",
     period: "/ mois",
     description: "Le plus populaire — économisez plus de 40%",
