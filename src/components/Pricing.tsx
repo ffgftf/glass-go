@@ -112,7 +112,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12 bg-accent/50 rounded-2xl p-6 max-w-3xl mx-auto">
+        <div className="text-center mt-12 bg-accent/50 rounded-2xl p-6 max-w-5xl mx-auto">
           <p className="text-foreground font-semibold mb-1">Frais d'inscription annuels : 10€</p>
           <p className="text-muted-foreground text-sm" style={{ fontFamily: "var(--font-body)" }}>
             Comprend le prêt de la boîte de collecte
