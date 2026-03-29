@@ -14,7 +14,7 @@ const steps = [
   {
     icon: RefreshCw,
     title: "3. Une boîte neuve",
-    description: "On vide votre boîte au centre de recyclage et on vous en laisse une nouvelle. C'est tout !",
+    description: "On vide votre boîte au centre de recyclage et on vous en laisse une nouvelle. C'est tout ! La planète dit merci 🌍",
   },
 ];
 
