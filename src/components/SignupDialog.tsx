@@ -71,8 +71,9 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
                 <SelectValue placeholder="Choisir une formule" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="semaine">À la semaine — 7,50€</SelectItem>
-                <SelectItem value="mensuel">Abonnement mensuel — 19,90€</SelectItem>
+                <SelectItem value="basic">Basic — 7,50€/semaine</SelectItem>
+                <SelectItem value="standard">Standard — 19,90€/mois</SelectItem>
+                <SelectItem value="infini-pro">Infini Pro — 29,90€/mois</SelectItem>
               </SelectContent>
             </Select>
           </div>
