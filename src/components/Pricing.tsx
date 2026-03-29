@@ -27,7 +27,7 @@ const plans = [
       "Boîte de collecte fournie",
       "Recyclage garanti",
       "Priorité de ramassage",
-      "2 collectes par mois",
+      
       "Jusqu'à 50 bouteilles",
       "Créneau au choix",
       "Points fidélité ♻️",
@@ -46,7 +46,7 @@ const plans = [
       "Boîte de collecte fournie",
       "Recyclage garanti",
       "Priorité de ramassage",
-      "Collectes illimitées",
+      
       "Bouteilles illimitées",
       "Créneau flexible",
       "Points fidélité x2 ♻️",
