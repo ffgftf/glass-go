@@ -24,12 +24,34 @@ const plans = [
       "Boîte de collecte fournie",
       "Recyclage garanti",
       "Priorité de ramassage",
+      "2 collectes par mois",
+      "Jusqu'à 50 bouteilles",
+      "Créneau au choix",
+      "Points fidélité ♻️",
+      "Support prioritaire",
       "Économie de 10€/mois",
     ],
     popular: true,
   },
+  {
+    name: "Infini Pro",
+    price: "29,90",
+    period: "/ mois",
+    description: "Idéal restaurants & bars",
+    features: [
+      "Ramassage chaque dimanche",
+      "Boîte de collecte fournie",
+      "Recyclage garanti",
+      "Priorité de ramassage",
+      "Collectes illimitées",
+      "Bouteilles illimitées",
+      "Créneau flexible",
+      "Points fidélité x2 ♻️",
+      "Rapport mensuel",
+    ],
+    popular: false,
+  },
 ];
-
 const Pricing = () => {
   return (
     <section className="py-24 bg-card" id="tarifs">
