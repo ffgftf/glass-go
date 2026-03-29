@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import CommentCaMarche from "./pages/CommentCaMarche.tsx";
 import Tarifs from "./pages/Tarifs.tsx";
 import ZoneDeCollecte from "./pages/ZoneDeCollecte.tsx";
+import Contact from "./pages/Contact.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/comment-ca-marche" element={<CommentCaMarche />} />
           <Route path="/tarifs" element={<Tarifs />} />
           <Route path="/zone-de-collecte" element={<ZoneDeCollecte />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

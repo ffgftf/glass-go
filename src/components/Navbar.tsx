@@ -25,6 +25,9 @@ const Navbar = () => {
             <Link to="/zone-de-collecte" className="text-muted-foreground hover:text-foreground transition-colors">
               Zone de collecte
             </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </Link>
           </div>
 
           <Button variant="hero" size="sm" className="px-6" onClick={() => setSignupOpen(true)}>
