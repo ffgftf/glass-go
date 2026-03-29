@@ -16,18 +16,18 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
-            <Link to="/comment-ca-marche" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/#comment-ca-marche" className="text-muted-foreground hover:text-foreground transition-colors">
               Comment ça marche
-            </Link>
-            <Link to="/tarifs" className="text-muted-foreground hover:text-foreground transition-colors">
+            </a>
+            <a href="/#tarifs" className="text-muted-foreground hover:text-foreground transition-colors">
               Tarifs
-            </Link>
-            <Link to="/zone-de-collecte" className="text-muted-foreground hover:text-foreground transition-colors">
+            </a>
+            <a href="/#zone-de-collecte" className="text-muted-foreground hover:text-foreground transition-colors">
               Zone de collecte
-            </Link>
-            <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+            </a>
+            <a href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">
               Contact
-            </Link>
+            </a>
           </div>
 
           <Button variant="hero" size="sm" className="px-6" onClick={() => setSignupOpen(true)}>
