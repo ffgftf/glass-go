@@ -20,6 +20,25 @@ type Profile = {
 
 const emptyProfile: Profile = { prenom: "", nom: "", email: "", telephone: "", adresse: "", formule: "" };
 
+// Calcule la prochaine collecte : dimanche à partir de 13h00
+const getNextCollecte = (now = new Date()) => {
+  const next = new Date(now);
+  next.setSeconds(0, 0);
+  const day = now.getDay(); // 0 = dimanche
+  if (day === 0 && now.getHours() < 13) {
+    next.setHours(13, 0, 0, 0);
+  } else {
+    const daysUntilSunday = (7 - day) % 7 || 7;
+    next.setDate(now.getDate() + daysUntilSunday);
+    next.setHours(13, 0, 0, 0);
+  }
+  return next;
+};
+
+const formatCollecte = (d: Date) =>
+  d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }) +
+  " à partir de 13h00";
+
 const TableauDeBord = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
