@@ -30,6 +30,7 @@ interface SignupDialogProps {
 const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [formData, setFormData] = useState(() => {
     if (typeof window === "undefined") return emptyForm;
     try {
