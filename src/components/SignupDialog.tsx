@@ -3,7 +3,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const STORAGE_KEY = "ekoboko_signup_draft";
+
+const emptyForm = {
+  nom: "",
+  prenom: "",
+  email: "",
+  telephone: "",
+  adresse: "",
+  formule: "",
+  motDePasse: "",
+  confirmationMotDePasse: "",
+};
 import { toast } from "sonner";
 
 interface SignupDialogProps {
@@ -12,16 +25,29 @@ interface SignupDialogProps {
 }
 
 const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
-  const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    adresse: "",
-    formule: "",
-    motDePasse: "",
-    confirmationMotDePasse: "",
+  const [formData, setFormData] = useState(() => {
+    if (typeof window === "undefined") return emptyForm;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return { ...emptyForm, ...JSON.parse(saved) };
+    } catch {
+      // ignore parse errors
+    }
+    return emptyForm;
   });
+
+  useEffect(() => {
+    try {
+      const isEmpty = Object.values(formData).every((v) => !v);
+      if (isEmpty) {
+        localStorage.removeItem(STORAGE_KEY);
+      } else {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [formData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +64,8 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
       return;
     }
     toast.success("Inscription envoyée ! Nous vous contacterons très bientôt.");
-    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "", motDePasse: "", confirmationMotDePasse: "" });
+    setFormData(emptyForm);
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
     onOpenChange(false);
   };
 
