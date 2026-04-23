@@ -120,7 +120,14 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        // Empêcher la fermeture pendant la redirection (évite démontage simultané du portail)
+        if (redirecting) return;
+        onOpenChange(o);
+      }}
+    >
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>S'inscrire à Eko Boko</DialogTitle>
@@ -128,6 +135,14 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
             Service disponible uniquement à <strong>Pointe-à-Bacchus</strong>.
           </DialogDescription>
         </DialogHeader>
+        {redirecting && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background/95 backdrop-blur-sm rounded-lg">
+            <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+            <p className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+              Redirection vers votre tableau de bord...
+            </p>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4" style={{ fontFamily: "var(--font-body)" }}>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
