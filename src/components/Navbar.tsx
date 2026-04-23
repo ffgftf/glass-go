@@ -28,6 +28,9 @@ const Navbar = () => {
             <a href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </a>
+            <Link to="/app" className="text-muted-foreground hover:text-foreground transition-colors">
+              L'app 📱
+            </Link>
           </div>
 
           <Button variant="hero" size="sm" className="px-6" onClick={() => setSignupOpen(true)}>
