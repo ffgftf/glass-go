@@ -4,6 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
+import { useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = "ekoboko_signup_draft";
 
@@ -17,7 +21,6 @@ const emptyForm = {
   motDePasse: "",
   confirmationMotDePasse: "",
 };
-import { toast } from "sonner";
 
 interface SignupDialogProps {
   open: boolean;
@@ -25,31 +28,39 @@ interface SignupDialogProps {
 }
 
 const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(() => {
     if (typeof window === "undefined") return emptyForm;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return { ...emptyForm, ...JSON.parse(saved) };
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Ne jamais restaurer les mots de passe depuis le stockage local
+        return { ...emptyForm, ...parsed, motDePasse: "", confirmationMotDePasse: "" };
+      }
     } catch {
-      // ignore parse errors
+      // ignore
     }
     return emptyForm;
   });
 
   useEffect(() => {
     try {
-      const isEmpty = Object.values(formData).every((v) => !v);
+      // On ne persiste PAS les mots de passe
+      const { motDePasse, confirmationMotDePasse, ...safe } = formData;
+      const isEmpty = Object.values(safe).every((v) => !v);
       if (isEmpty) {
         localStorage.removeItem(STORAGE_KEY);
       } else {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(safe));
       }
     } catch {
-      // ignore storage errors
+      // ignore
     }
   }, [formData]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.nom || !formData.prenom || !formData.email || !formData.adresse || !formData.formule || !formData.motDePasse || !formData.confirmationMotDePasse) {
       toast.error("Veuillez remplir tous les champs obligatoires.");
@@ -63,15 +74,46 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
       toast.error("Les mots de passe ne correspondent pas.");
       return;
     }
-    toast.success("Inscription envoyée ! Nous vous contacterons très bientôt.");
+
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.motDePasse,
+      options: {
+        emailRedirectTo: `${window.location.origin}/tableau-de-bord`,
+        data: {
+          prenom: formData.prenom,
+          nom: formData.nom,
+          telephone: formData.telephone,
+          adresse: formData.adresse,
+          formule: formData.formule,
+        },
+      },
+    });
+    setLoading(false);
+
+    if (error) {
+      toast.error(error.message.includes("already") ? "Cet email est déjà inscrit." : error.message);
+      return;
+    }
+
+    toast.success("Inscription réussie ! Vérifiez vos emails pour confirmer votre compte.");
     setFormData(emptyForm);
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
     onOpenChange(false);
+    navigate("/tableau-de-bord");
+  };
+
+  const handleGoogle = async () => {
+    const { error } = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}/tableau-de-bord`,
+    });
+    if (error) toast.error("Connexion Google impossible.");
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>S'inscrire à Eko Boko</DialogTitle>
           <DialogDescription style={{ fontFamily: "var(--font-body)" }}>
@@ -95,11 +137,11 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="motDePasse">Mot de passe *</Label>
-            <Input id="motDePasse" type="password" placeholder="Au moins 6 caractères" value={formData.motDePasse} onChange={(e) => setFormData({ ...formData, motDePasse: e.target.value })} />
+            <Input id="motDePasse" type="password" autoComplete="new-password" placeholder="Au moins 6 caractères" value={formData.motDePasse} onChange={(e) => setFormData({ ...formData, motDePasse: e.target.value })} />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="confirmationMotDePasse">Confirmer le mot de passe *</Label>
-            <Input id="confirmationMotDePasse" type="password" placeholder="Ressaisir le mot de passe" value={formData.confirmationMotDePasse} onChange={(e) => setFormData({ ...formData, confirmationMotDePasse: e.target.value })} />
+            <Input id="confirmationMotDePasse" type="password" autoComplete="new-password" placeholder="Ressaisir le mot de passe" value={formData.confirmationMotDePasse} onChange={(e) => setFormData({ ...formData, confirmationMotDePasse: e.target.value })} />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="telephone">Téléphone</Label>
@@ -125,8 +167,15 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           <p className="text-xs text-muted-foreground">
             Frais d'inscription annuels : 10€ (inclut le prêt de la boîte)
           </p>
-          <Button type="submit" variant="hero" className="w-full">
-            Valider mon inscription
+          <Button type="submit" variant="hero" className="w-full" disabled={loading}>
+            {loading ? "Création du compte..." : "Valider mon inscription"}
+          </Button>
+          <div className="relative my-2">
+            <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
+            <div className="relative flex justify-center text-xs"><span className="bg-background px-2 text-muted-foreground">ou</span></div>
+          </div>
+          <Button type="button" variant="outline" className="w-full" onClick={handleGoogle}>
+            Continuer avec Google
           </Button>
         </form>
       </DialogContent>

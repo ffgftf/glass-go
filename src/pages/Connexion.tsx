@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -6,40 +6,45 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
+import { useAuth } from "@/hooks/useAuth";
 
 const Connexion = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) navigate("/tableau-de-bord", { replace: true });
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !motDePasse) {
       toast.error("Veuillez renseigner votre email et votre mot de passe.");
       return;
     }
-    const emailValide = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailValide) {
-      toast.error("Adresse email invalide.");
-      return;
-    }
-    if (motDePasse.length < 6) {
-      toast.error("Mot de passe trop court (6 caractères minimum).");
-      return;
-    }
 
     setLoading(true);
-    try {
-      sessionStorage.setItem("ekoboko_user", JSON.stringify({ email }));
-    } catch {
-      // ignore storage errors
+    const { error } = await supabase.auth.signInWithPassword({ email, password: motDePasse });
+    setLoading(false);
+
+    if (error) {
+      toast.error(error.message.includes("Invalid") ? "Email ou mot de passe incorrect." : error.message);
+      return;
     }
     toast.success("Connexion réussie !");
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/tableau-de-bord");
-    }, 400);
+    navigate("/tableau-de-bord");
+  };
+
+  const handleGoogle = async () => {
+    const { error } = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}/tableau-de-bord`,
+    });
+    if (error) toast.error("Connexion Google impossible.");
   };
 
   return (
@@ -57,29 +62,23 @@ const Connexion = () => {
           <form onSubmit={handleSubmit} className="space-y-4" style={{ fontFamily: "var(--font-body)" }}>
             <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="vous@exemple.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-              />
+              <Input id="email" type="email" placeholder="vous@exemple.com" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="motDePasse">Mot de passe</Label>
-              <Input
-                id="motDePasse"
-                type="password"
-                placeholder="Votre mot de passe"
-                value={motDePasse}
-                onChange={(e) => setMotDePasse(e.target.value)}
-                autoComplete="current-password"
-              />
+              <Input id="motDePasse" type="password" placeholder="Votre mot de passe" value={motDePasse} onChange={(e) => setMotDePasse(e.target.value)} autoComplete="current-password" />
             </div>
 
             <Button type="submit" variant="hero" className="w-full" disabled={loading}>
-              {loading ? "Connexion..." : "Accéder à mon tableau de bord"}
+              {loading ? "Connexion..." : "Se connecter"}
+            </Button>
+
+            <div className="relative my-2">
+              <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
+              <div className="relative flex justify-center text-xs"><span className="bg-card px-2 text-muted-foreground">ou</span></div>
+            </div>
+            <Button type="button" variant="outline" className="w-full" onClick={handleGoogle}>
+              Continuer avec Google
             </Button>
           </form>
 
