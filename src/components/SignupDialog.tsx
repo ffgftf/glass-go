@@ -30,6 +30,7 @@ interface SignupDialogProps {
 const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [formData, setFormData] = useState(() => {
     if (typeof window === "undefined") return emptyForm;
     try {
@@ -100,9 +101,15 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
     toast.success("Inscription réussie ! Vérifiez vos emails pour confirmer votre compte.");
     setFormData(emptyForm);
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
-    onOpenChange(false);
-    // Laisser Radix démonter proprement le portail avant de naviguer
-    setTimeout(() => navigate("/tableau-de-bord"), 200);
+    // Afficher l'écran de redirection, puis fermer la modale, puis naviguer
+    setRedirecting(true);
+    setTimeout(() => {
+      onOpenChange(false);
+      setTimeout(() => {
+        setRedirecting(false);
+        navigate("/tableau-de-bord");
+      }, 250);
+    }, 400);
   };
 
   const handleGoogle = async () => {
@@ -113,7 +120,14 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        // Empêcher la fermeture pendant la redirection (évite démontage simultané du portail)
+        if (redirecting) return;
+        onOpenChange(o);
+      }}
+    >
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>S'inscrire à Eko Boko</DialogTitle>
@@ -121,6 +135,14 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
             Service disponible uniquement à <strong>Pointe-à-Bacchus</strong>.
           </DialogDescription>
         </DialogHeader>
+        {redirecting && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background/95 backdrop-blur-sm rounded-lg">
+            <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+            <p className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+              Redirection vers votre tableau de bord...
+            </p>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4" style={{ fontFamily: "var(--font-body)" }}>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
@@ -168,8 +190,8 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           <p className="text-xs text-muted-foreground">
             Frais d'inscription annuels : 10€ (inclut le prêt de la boîte)
           </p>
-          <Button type="submit" variant="hero" className="w-full" disabled={loading}>
-            {loading ? "Création du compte..." : "Valider mon inscription"}
+          <Button type="submit" variant="hero" className="w-full" disabled={loading || redirecting}>
+            {loading ? "Création du compte..." : redirecting ? "Redirection..." : "Valider mon inscription"}
           </Button>
           <div className="relative my-2">
             <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
