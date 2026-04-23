@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 
 const plans = [
-  { name: "Basic", price: "5€", desc: "1 collecte / mois", color: "bg-primary/10 text-primary border-primary/30" },
-  { name: "Standard", price: "10€", desc: "2 collectes / mois", color: "bg-blue-500/10 text-blue-700 border-blue-500/30" },
-  { name: "Premium", price: "20€", desc: "Illimité", color: "bg-purple-500/10 text-purple-700 border-purple-500/30" },
+  { name: "Basic", price: "7,50€", desc: "/ semaine", color: "bg-primary/10 text-primary border-primary/30" },
+  { name: "Standard", price: "19,90€", desc: "/ mois", color: "bg-blue-500/10 text-blue-700 border-blue-500/30" },
+  { name: "Infini Pro", price: "29,90€", desc: "/ mois", color: "bg-purple-500/10 text-purple-700 border-purple-500/30" },
 ];
 
 const PhoneFrame = ({ children, title }: { children: React.ReactNode; title: string }) => (
