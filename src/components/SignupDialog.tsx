@@ -101,7 +101,8 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
     setFormData(emptyForm);
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
     onOpenChange(false);
-    navigate("/tableau-de-bord");
+    // Laisser Radix démonter proprement le portail avant de naviguer
+    setTimeout(() => navigate("/tableau-de-bord"), 200);
   };
 
   const handleGoogle = async () => {
