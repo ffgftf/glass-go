@@ -47,6 +47,20 @@ const TableauDeBord = () => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const nextCollecte = getNextCollecte();
+  const hoursUntilCollecte = Math.round((nextCollecte.getTime() - Date.now()) / 36e5);
+  const isImminent = hoursUntilCollecte <= 48;
+
+  useEffect(() => {
+    if (loading) return;
+    if (isImminent) {
+      toast("📦 Rappel collecte", {
+        description: `Votre prochaine collecte est ${formatCollecte(nextCollecte)}.`,
+        duration: 6000,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   useEffect(() => {
     if (authLoading) return;
