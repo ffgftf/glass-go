@@ -64,7 +64,8 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
       return;
     }
     toast.success("Inscription envoyée ! Nous vous contacterons très bientôt.");
-    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "", motDePasse: "", confirmationMotDePasse: "" });
+    setFormData(emptyForm);
+    try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
     onOpenChange(false);
   };
 
