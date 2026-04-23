@@ -19,16 +19,21 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
     telephone: "",
     adresse: "",
     formule: "",
+    motDePasse: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.nom || !formData.prenom || !formData.email || !formData.adresse || !formData.formule) {
+    if (!formData.nom || !formData.prenom || !formData.email || !formData.adresse || !formData.formule || !formData.motDePasse) {
       toast.error("Veuillez remplir tous les champs obligatoires.");
       return;
     }
+    if (formData.motDePasse.length < 6) {
+      toast.error("Le mot de passe doit contenir au moins 6 caractères.");
+      return;
+    }
     toast.success("Inscription envoyée ! Nous vous contacterons très bientôt.");
-    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "" });
+    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "", motDePasse: "" });
     onOpenChange(false);
   };
 
@@ -55,6 +60,10 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           <div className="space-y-1.5">
             <Label htmlFor="email">Email *</Label>
             <Input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="motDePasse">Mot de passe *</Label>
+            <Input id="motDePasse" type="password" placeholder="Au moins 6 caractères" value={formData.motDePasse} onChange={(e) => setFormData({ ...formData, motDePasse: e.target.value })} />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="telephone">Téléphone</Label>
