@@ -190,8 +190,8 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           <p className="text-xs text-muted-foreground">
             Frais d'inscription annuels : 10€ (inclut le prêt de la boîte)
           </p>
-          <Button type="submit" variant="hero" className="w-full" disabled={loading}>
-            {loading ? "Création du compte..." : "Valider mon inscription"}
+          <Button type="submit" variant="hero" className="w-full" disabled={loading || redirecting}>
+            {loading ? "Création du compte..." : redirecting ? "Redirection..." : "Valider mon inscription"}
           </Button>
           <div className="relative my-2">
             <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
