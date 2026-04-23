@@ -101,9 +101,15 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
     toast.success("Inscription réussie ! Vérifiez vos emails pour confirmer votre compte.");
     setFormData(emptyForm);
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
-    onOpenChange(false);
-    // Laisser Radix démonter proprement le portail avant de naviguer
-    setTimeout(() => navigate("/tableau-de-bord"), 200);
+    // Afficher l'écran de redirection, puis fermer la modale, puis naviguer
+    setRedirecting(true);
+    setTimeout(() => {
+      onOpenChange(false);
+      setTimeout(() => {
+        setRedirecting(false);
+        navigate("/tableau-de-bord");
+      }, 250);
+    }, 400);
   };
 
   const handleGoogle = async () => {
