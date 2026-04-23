@@ -20,11 +20,12 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
     adresse: "",
     formule: "",
     motDePasse: "",
+    confirmationMotDePasse: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.nom || !formData.prenom || !formData.email || !formData.adresse || !formData.formule || !formData.motDePasse) {
+    if (!formData.nom || !formData.prenom || !formData.email || !formData.adresse || !formData.formule || !formData.motDePasse || !formData.confirmationMotDePasse) {
       toast.error("Veuillez remplir tous les champs obligatoires.");
       return;
     }
@@ -32,8 +33,12 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
       toast.error("Le mot de passe doit contenir au moins 6 caractères.");
       return;
     }
+    if (formData.motDePasse !== formData.confirmationMotDePasse) {
+      toast.error("Les mots de passe ne correspondent pas.");
+      return;
+    }
     toast.success("Inscription envoyée ! Nous vous contacterons très bientôt.");
-    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "", motDePasse: "" });
+    setFormData({ nom: "", prenom: "", email: "", telephone: "", adresse: "", formule: "", motDePasse: "", confirmationMotDePasse: "" });
     onOpenChange(false);
   };
 
@@ -64,6 +69,10 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
           <div className="space-y-1.5">
             <Label htmlFor="motDePasse">Mot de passe *</Label>
             <Input id="motDePasse" type="password" placeholder="Au moins 6 caractères" value={formData.motDePasse} onChange={(e) => setFormData({ ...formData, motDePasse: e.target.value })} />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="confirmationMotDePasse">Confirmer le mot de passe *</Label>
+            <Input id="confirmationMotDePasse" type="password" placeholder="Ressaisir le mot de passe" value={formData.confirmationMotDePasse} onChange={(e) => setFormData({ ...formData, confirmationMotDePasse: e.target.value })} />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="telephone">Téléphone</Label>
