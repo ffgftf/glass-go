@@ -20,6 +20,25 @@ type Profile = {
 
 const emptyProfile: Profile = { prenom: "", nom: "", email: "", telephone: "", adresse: "", formule: "" };
 
+// Calcule la prochaine collecte : dimanche à partir de 13h00
+const getNextCollecte = (now = new Date()) => {
+  const next = new Date(now);
+  next.setSeconds(0, 0);
+  const day = now.getDay(); // 0 = dimanche
+  if (day === 0 && now.getHours() < 13) {
+    next.setHours(13, 0, 0, 0);
+  } else {
+    const daysUntilSunday = (7 - day) % 7 || 7;
+    next.setDate(now.getDate() + daysUntilSunday);
+    next.setHours(13, 0, 0, 0);
+  }
+  return next;
+};
+
+const formatCollecte = (d: Date) =>
+  d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }) +
+  " à partir de 13h00";
+
 const TableauDeBord = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
@@ -28,6 +47,20 @@ const TableauDeBord = () => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const nextCollecte = getNextCollecte();
+  const hoursUntilCollecte = Math.round((nextCollecte.getTime() - Date.now()) / 36e5);
+  const isImminent = hoursUntilCollecte <= 48;
+
+  useEffect(() => {
+    if (loading) return;
+    if (isImminent) {
+      toast("📦 Rappel collecte", {
+        description: `Votre prochaine collecte est ${formatCollecte(nextCollecte)}.`,
+        duration: 6000,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -127,10 +160,33 @@ const TableauDeBord = () => {
             <Button variant="outline" size="sm" onClick={handleLogout}>Se déconnecter</Button>
           </div>
 
+          <div
+            role="status"
+            className={`mb-6 rounded-xl border p-4 sm:p-5 flex items-start gap-3 ${
+              isImminent
+                ? "bg-primary/10 border-primary/30 text-foreground"
+                : "bg-card border-border"
+            }`}
+          >
+            <span className="text-2xl leading-none">🔔</span>
+            <div className="flex-1">
+              <p className="font-semibold text-foreground">
+                {isImminent ? "Rappel : prochaine collecte bientôt !" : "Prochaine collecte"}
+              </p>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                {formatCollecte(nextCollecte)}
+                {isImminent && hoursUntilCollecte > 0 && ` — dans environ ${hoursUntilCollecte}h`}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Pensez à sortir votre boîte Eko Boko avant 13h00.
+              </p>
+            </div>
+          </div>
+
           <div className="grid sm:grid-cols-2 gap-4 mb-8">
             <div className="bg-card border border-border rounded-xl p-6">
               <p className="text-sm text-muted-foreground">📦 Prochaine collecte</p>
-              <p className="text-xl font-semibold mt-2">Vendredi 9h00</p>
+              <p className="text-xl font-semibold mt-2 capitalize">{formatCollecte(nextCollecte)}</p>
             </div>
             <div className="bg-card border border-border rounded-xl p-6">
               <p className="text-sm text-muted-foreground">🎯 Formule actuelle</p>
