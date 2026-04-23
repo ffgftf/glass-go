@@ -33,9 +33,14 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <Button variant="hero" size="sm" className="px-6" onClick={() => setSignupOpen(true)}>
-            S'inscrire
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="px-4" asChild>
+              <Link to="/connexion">Connexion</Link>
+            </Button>
+            <Button variant="hero" size="sm" className="px-6" onClick={() => setSignupOpen(true)}>
+              S'inscrire
+            </Button>
+          </div>
         </div>
       </nav>
       <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />

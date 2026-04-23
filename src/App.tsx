@@ -9,6 +9,8 @@ import Tarifs from "./pages/Tarifs.tsx";
 import ZoneDeCollecte from "./pages/ZoneDeCollecte.tsx";
 import Contact from "./pages/Contact.tsx";
 import AppMobile from "./pages/AppMobile.tsx";
+import Connexion from "./pages/Connexion.tsx";
+import TableauDeBord from "./pages/TableauDeBord.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/zone-de-collecte" element={<ZoneDeCollecte />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/app" element={<AppMobile />} />
+          <Route path="/connexion" element={<Connexion />} />
+          <Route path="/tableau-de-bord" element={<TableauDeBord />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
