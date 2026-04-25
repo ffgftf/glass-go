@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CollectionMap from "@/components/CollectionMap";
 import { MapPin, Rocket } from "lucide-react";
 
 const quartiers = [
