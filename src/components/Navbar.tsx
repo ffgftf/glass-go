@@ -93,7 +93,7 @@ const Navbar = () => {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-md">
+          <div className="border-t border-border/50 bg-background/95 backdrop-blur-md">
             <div className="container mx-auto px-6 py-4 flex flex-col gap-1 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
               <Link
                 to="/"
