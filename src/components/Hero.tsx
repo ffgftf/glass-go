@@ -41,7 +41,10 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <Button variant="hero" size="lg" className="px-8 py-6" onClick={() => setSignupOpen(true)}>
+              <Button variant="hero" size="lg" className="px-8 py-6" onClick={() => setPickupOpen(true)}>
+                Demander mon ramassage
+              </Button>
+              <Button variant="hero-outline" size="lg" className="px-8 py-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-foreground" onClick={() => setSignupOpen(true)}>
                 S'abonner — 19,90€/mois
               </Button>
               <Link to="/comment-ca-marche">
