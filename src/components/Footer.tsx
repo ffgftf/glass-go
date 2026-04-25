@@ -21,13 +21,13 @@ const Footer = () => {
           <div>
             <h4 className="font-bold mb-4">Liens rapides</h4>
             <ul className="space-y-2 text-primary-foreground/60 text-sm" style={{ fontFamily: "var(--font-body)" }}>
-              <li><Link to="/" className="hover:text-accent transition-colors">Accueil</Link></li>
-              <li><Link to="/comment-ca-marche" className="hover:text-accent transition-colors">Comment ça marche</Link></li>
-              <li><Link to="/tarifs" className="hover:text-accent transition-colors">Tarifs</Link></li>
-              <li><Link to="/zone-de-collecte" className="hover:text-accent transition-colors">Zone de collecte</Link></li>
-              <li><Link to="/contact" className="hover:text-accent transition-colors">Contact</Link></li>
-              <li><Link to="/app" className="hover:text-accent transition-colors">L'app</Link></li>
-              <li><Link to="/connexion" className="hover:text-accent transition-colors">Connexion</Link></li>
+              <li><NavLink to="/" end className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Accueil</NavLink></li>
+              <li><NavLink to="/comment-ca-marche" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Comment ça marche</NavLink></li>
+              <li><NavLink to="/tarifs" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Tarifs</NavLink></li>
+              <li><NavLink to="/zone-de-collecte" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Zone de collecte</NavLink></li>
+              <li><NavLink to="/contact" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Contact</NavLink></li>
+              <li><NavLink to="/app" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">L'app</NavLink></li>
+              <li><NavLink to="/connexion" className="hover:text-accent transition-colors" activeClassName="text-accent font-semibold">Connexion</NavLink></li>
             </ul>
           </div>
 
