@@ -61,6 +61,7 @@ const Hero = () => {
         </div>
       </section>
       <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />
+      <PickupRequestDialog open={pickupOpen} onOpenChange={setPickupOpen} onContinue={() => setSignupOpen(true)} />
     </>
   );
 };
