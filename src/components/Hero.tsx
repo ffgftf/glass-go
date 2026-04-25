@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import { Link } from "react-router-dom";
 import SignupDialog from "@/components/SignupDialog";
+import PickupRequestDialog from "@/components/PickupRequestDialog";
 import { useState } from "react";
 
 const Hero = () => {
   const [signupOpen, setSignupOpen] = useState(false);
+  const [pickupOpen, setPickupOpen] = useState(false);
 
   return (
     <>
