@@ -33,7 +33,7 @@ const ZoneDeCollecte = () => {
           <div className="max-w-3xl mx-auto">
             <div className="bg-card rounded-2xl border border-border p-8 mb-8">
               <p className="text-foreground text-lg mb-8 text-center" style={{ fontFamily: "var(--font-body)" }}>
-                Nous desservons actuellement toute la commune de <strong>Petit-Bourg</strong> et ses quartiers.
+                Nous desservons actuellement toute la commune de <strong>Pointe-à-Bacchus</strong> et ses quartiers.
                 Notre objectif : couvrir toute la Guadeloupe d'ici 2027 ! 🌴
               </p>
 
