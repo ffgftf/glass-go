@@ -4,6 +4,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Pricing from "@/components/Pricing";
 import OurStory from "@/components/OurStory";
 import Footer from "@/components/Footer";
+import CollectionMap from "@/components/CollectionMap";
 import { MapPin, Rocket, MessageCircle, Phone, Mail } from "lucide-react";
 
 const quartiers = [
