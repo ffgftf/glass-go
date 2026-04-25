@@ -130,7 +130,7 @@ const Navbar = () => {
                   </Link>
                 ),
               )}
-              <div className="flex gap-2 pt-3 sm:hidden">
+              <div className="flex gap-2 pt-3">
                 <Button variant="outline" size="sm" className="flex-1" asChild>
                   <Link to="/connexion" onClick={closeMobile}>Connexion</Link>
                 </Button>
