@@ -70,29 +70,8 @@ const Navbar = () => {
             <img src={logo} alt="Eko Boko" className="h-16 w-auto" />
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
-            {navItems.map((item) =>
-              item.sectionId ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
-                  aria-current={isActive(item) ? "page" : undefined}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
-                  aria-current={isActive(item) ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </div>
+          <div className="hidden" />
+
 
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="hidden sm:inline-flex px-4" asChild>
