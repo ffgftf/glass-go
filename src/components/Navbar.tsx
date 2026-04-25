@@ -29,7 +29,7 @@ const Navbar = () => {
               Contact
             </a>
             <Link to="/app" className="text-muted-foreground hover:text-foreground transition-colors">
-              L'app 📱
+              L'app
             </Link>
           </div>
 
