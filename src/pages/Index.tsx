@@ -4,6 +4,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Pricing from "@/components/Pricing";
 import OurStory from "@/components/OurStory";
 import Footer from "@/components/Footer";
+import CollectionMap from "@/components/CollectionMap";
 import { MapPin, Rocket, MessageCircle, Phone, Mail } from "lucide-react";
 
 const quartiers = [
@@ -39,19 +40,22 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-card rounded-2xl border border-border p-8 mb-8">
-              <p className="text-foreground text-lg mb-8 text-center" style={{ fontFamily: "var(--font-body)" }}>
-                Nous desservons actuellement toute la commune de <strong>Pointe-à-Bacchus</strong> et ses quartiers.
-                Notre objectif : couvrir toute la Guadeloupe d'ici 2027 ! 🌴
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {quartiers.map((q) => (
-                  <div key={q} className="flex items-center gap-3 bg-background rounded-xl p-4 border border-border">
-                    <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-foreground font-medium" style={{ fontFamily: "var(--font-body)" }}>{q}</span>
-                  </div>
-                ))}
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 mb-8 items-stretch">
+              <CollectionMap />
+              <div className="bg-card rounded-2xl border border-border p-8 flex flex-col">
+                <p className="text-foreground text-base mb-6" style={{ fontFamily: "var(--font-body)" }}>
+                  Nous desservons actuellement toute la commune de <strong>Pointe-à-Bacchus</strong> et ses quartiers.
+                  Notre objectif : couvrir toute la Guadeloupe d'ici 2027 ! 🌴
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  {quartiers.map((q) => (
+                    <div key={q} className="flex items-center gap-2 bg-background rounded-xl p-3 border border-border">
+                      <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                      <span className="text-foreground text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>{q}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="bg-accent/50 rounded-2xl p-6 text-center">

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CollectionMap from "@/components/CollectionMap";
 import { MapPin, Rocket } from "lucide-react";
 
 const quartiers = [
@@ -30,7 +31,10 @@ const ZoneDeCollecte = () => {
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-8">
+              <CollectionMap />
+            </div>
             <div className="bg-card rounded-2xl border border-border p-8 mb-8">
               <p className="text-foreground text-lg mb-8 text-center" style={{ fontFamily: "var(--font-body)" }}>
                 Nous desservons actuellement toute la commune de <strong>Pointe-à-Bacchus</strong> et ses quartiers.
