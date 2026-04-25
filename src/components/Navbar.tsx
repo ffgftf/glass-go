@@ -70,29 +70,8 @@ const Navbar = () => {
             <img src={logo} alt="Eko Boko" className="h-16 w-auto" />
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
-            {navItems.map((item) =>
-              item.sectionId ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
-                  aria-current={isActive(item) ? "page" : undefined}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
-                  aria-current={isActive(item) ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </div>
+          <div className="hidden" />
+
 
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="hidden sm:inline-flex px-4" asChild>
@@ -103,7 +82,7 @@ const Navbar = () => {
             </Button>
             <button
               type="button"
-              className="md:hidden p-2 text-foreground"
+              className="p-2 text-foreground"
               aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
@@ -114,7 +93,7 @@ const Navbar = () => {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-md">
+          <div className="border-t border-border/50 bg-background/95 backdrop-blur-md">
             <div className="container mx-auto px-6 py-4 flex flex-col gap-1 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
               <Link
                 to="/"
@@ -151,7 +130,7 @@ const Navbar = () => {
                   </Link>
                 ),
               )}
-              <div className="flex gap-2 pt-3 sm:hidden">
+              <div className="flex gap-2 pt-3">
                 <Button variant="outline" size="sm" className="flex-1" asChild>
                   <Link to="/connexion" onClick={closeMobile}>Connexion</Link>
                 </Button>
