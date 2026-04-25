@@ -1,15 +1,66 @@
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SignupDialog from "@/components/SignupDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type NavItem = { label: string; href: string; sectionId?: string; routePath?: string };
+
+const navItems: NavItem[] = [
+  { label: "Comment ça marche", href: "/#comment-ca-marche", sectionId: "comment-ca-marche", routePath: "/comment-ca-marche" },
+  { label: "Tarifs", href: "/#tarifs", sectionId: "tarifs", routePath: "/tarifs" },
+  { label: "Zone de collecte", href: "/#zone-de-collecte", sectionId: "zone-de-collecte", routePath: "/zone-de-collecte" },
+  { label: "Contact", href: "/#contact", sectionId: "contact", routePath: "/contact" },
+  { label: "L'app", href: "/app", routePath: "/app" },
+];
 
 const Navbar = () => {
   const [signupOpen, setSignupOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const location = useLocation();
 
   const closeMobile = () => setMobileOpen(false);
+
+  // Track visible section on the home page via IntersectionObserver
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setActiveSection(null);
+      return;
+    }
+    const ids = navItems.map((i) => i.sectionId).filter(Boolean) as string[];
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActiveSection(visible[0].target.id);
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
+  const isActive = (item: NavItem) => {
+    if (item.routePath && item.routePath !== "/" && location.pathname === item.routePath) return true;
+    if (location.pathname === "/" && item.sectionId && activeSection === item.sectionId) return true;
+    return false;
+  };
+
+  const linkBase = "transition-colors";
+  const linkInactive = "text-muted-foreground hover:text-foreground";
+  const linkActiveDesktop = "text-foreground font-semibold border-b-2 border-primary pb-0.5";
+  const linkActiveMobile = "text-foreground font-semibold border-l-2 border-primary pl-2";
 
   return (
     <>
@@ -20,21 +71,27 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
-            <a href="/#comment-ca-marche" className="text-muted-foreground hover:text-foreground transition-colors">
-              Comment ça marche
-            </a>
-            <a href="/#tarifs" className="text-muted-foreground hover:text-foreground transition-colors">
-              Tarifs
-            </a>
-            <a href="/#zone-de-collecte" className="text-muted-foreground hover:text-foreground transition-colors">
-              Zone de collecte
-            </a>
-            <a href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </a>
-            <Link to="/app" className="text-muted-foreground hover:text-foreground transition-colors">
-              L'app
-            </Link>
+            {navItems.map((item) =>
+              item.sectionId ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
+                  aria-current={isActive(item) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={cn(linkBase, isActive(item) ? linkActiveDesktop : linkInactive)}
+                  aria-current={isActive(item) ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -59,24 +116,41 @@ const Navbar = () => {
         {mobileOpen && (
           <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-md">
             <div className="container mx-auto px-6 py-4 flex flex-col gap-1 text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
-              <Link to="/" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                to="/"
+                onClick={closeMobile}
+                className={cn(
+                  "py-2",
+                  linkBase,
+                  location.pathname === "/" && !activeSection ? linkActiveMobile : linkInactive,
+                )}
+                aria-current={location.pathname === "/" && !activeSection ? "page" : undefined}
+              >
                 Accueil
               </Link>
-              <a href="/#comment-ca-marche" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
-                Comment ça marche
-              </a>
-              <a href="/#tarifs" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
-                Tarifs
-              </a>
-              <a href="/#zone-de-collecte" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
-                Zone de collecte
-              </a>
-              <a href="/#contact" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
-                Contact
-              </a>
-              <Link to="/app" onClick={closeMobile} className="py-2 text-muted-foreground hover:text-foreground transition-colors">
-                L'app
-              </Link>
+              {navItems.map((item) =>
+                item.sectionId ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMobile}
+                    className={cn("py-2", linkBase, isActive(item) ? linkActiveMobile : linkInactive)}
+                    aria-current={isActive(item) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={closeMobile}
+                    className={cn("py-2", linkBase, isActive(item) ? linkActiveMobile : linkInactive)}
+                    aria-current={isActive(item) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                ),
+              )}
               <div className="flex gap-2 pt-3 sm:hidden">
                 <Button variant="outline" size="sm" className="flex-1" asChild>
                   <Link to="/connexion" onClick={closeMobile}>Connexion</Link>
