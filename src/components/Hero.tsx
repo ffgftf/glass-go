@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 import { Link } from "react-router-dom";
 import SignupDialog from "@/components/SignupDialog";
+import PickupRequestDialog from "@/components/PickupRequestDialog";
 import { useState } from "react";
 
 const Hero = () => {
   const [signupOpen, setSignupOpen] = useState(false);
+  const [pickupOpen, setPickupOpen] = useState(false);
 
   return (
     <>
@@ -39,7 +41,10 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <Button variant="hero" size="lg" className="px-8 py-6" onClick={() => setSignupOpen(true)}>
+              <Button variant="hero" size="lg" className="px-8 py-6" onClick={() => setPickupOpen(true)}>
+                Demander mon ramassage
+              </Button>
+              <Button variant="hero-outline" size="lg" className="px-8 py-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-foreground" onClick={() => setSignupOpen(true)}>
                 S'abonner — 19,90€/mois
               </Button>
               <Link to="/comment-ca-marche">
@@ -56,6 +61,7 @@ const Hero = () => {
         </div>
       </section>
       <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />
+      <PickupRequestDialog open={pickupOpen} onOpenChange={setPickupOpen} onContinue={() => setSignupOpen(true)} />
     </>
   );
 };
