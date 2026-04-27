@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CollectionMap from "@/components/CollectionMap";
 import CollectionFAQ from "@/components/CollectionFAQ";
+import CoverageChecker from "@/components/CoverageChecker";
 import { MapPin, Rocket } from "lucide-react";
 
 const quartiers = [
@@ -63,6 +64,10 @@ const ZoneDeCollecte = () => {
               <p className="text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
                 Baie-Mahault, Lamentin, Pointe-à-Pitre et toute la Grande-Terre !
               </p>
+            </div>
+
+            <div className="flex justify-center mt-8">
+              <CoverageChecker />
             </div>
           </div>
         </div>
