@@ -65,6 +65,10 @@ const ZoneDeCollecte = () => {
                 Baie-Mahault, Lamentin, Pointe-à-Pitre et toute la Grande-Terre !
               </p>
             </div>
+
+            <div className="flex justify-center mt-8">
+              <CoverageChecker />
+            </div>
           </div>
         </div>
       </section>
