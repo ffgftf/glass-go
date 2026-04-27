@@ -5,6 +5,7 @@ import Pricing from "@/components/Pricing";
 import OurStory from "@/components/OurStory";
 import Footer from "@/components/Footer";
 import CollectionMap from "@/components/CollectionMap";
+import CollectionFAQ from "@/components/CollectionFAQ";
 import { MapPin, Rocket, MessageCircle, Phone, Mail } from "lucide-react";
 
 const quartiers = [
@@ -70,6 +71,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <CollectionFAQ />
 
       <OurStory />
 

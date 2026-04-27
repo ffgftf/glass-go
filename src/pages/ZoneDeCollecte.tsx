@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CollectionMap from "@/components/CollectionMap";
+import CollectionFAQ from "@/components/CollectionFAQ";
 import { MapPin, Rocket } from "lucide-react";
 
 const quartiers = [
@@ -66,6 +67,7 @@ const ZoneDeCollecte = () => {
           </div>
         </div>
       </section>
+      <CollectionFAQ />
       <Footer />
     </div>
   );
