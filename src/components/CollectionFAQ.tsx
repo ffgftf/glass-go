@@ -4,7 +4,7 @@ import { HelpCircle } from "lucide-react";
 const faqs = [
   {
     q: "Quels quartiers sont desservis ?",
-    a: "Nous desservons toute la commune de Pointe-à-Bacchus et ses quartiers : Centre-ville, Montebello, Carrère, Duquerry, Bovis et La Lézarde. D'autres zones (Baie-Mahault, Lamentin, Pointe-à-Pitre et la Grande-Terre) arrivent prochainement.",
+    a: "Nous desservons toute la commune de Pointe-à-Bacchus. D'autres zones (Baie-Mahault, Lamentin, Pointe-à-Pitre et la Grande-Terre) arrivent prochainement.",
   },
   {
     q: "Quels sont les horaires de collecte ?",
