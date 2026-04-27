@@ -6,6 +6,7 @@ import OurStory from "@/components/OurStory";
 import Footer from "@/components/Footer";
 import CollectionMap from "@/components/CollectionMap";
 import CollectionFAQ from "@/components/CollectionFAQ";
+import CoverageChecker from "@/components/CoverageChecker";
 import { MapPin, Rocket, MessageCircle, Phone, Mail } from "lucide-react";
 
 const quartiers = [
@@ -59,7 +60,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-accent/50 rounded-2xl p-6 text-center">
+            <div className="bg-accent/50 rounded-2xl p-6 text-center mb-8">
               <div className="inline-flex items-center gap-2 text-foreground font-semibold mb-2">
                 <Rocket className="w-5 h-5" />
                 Prochainement
@@ -67,6 +68,9 @@ const Index = () => {
               <p className="text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
                 Baie-Mahault, Lamentin, Pointe-à-Pitre et toute la Grande-Terre !
               </p>
+            </div>
+            <div className="flex justify-center">
+              <CoverageChecker />
             </div>
           </div>
         </div>

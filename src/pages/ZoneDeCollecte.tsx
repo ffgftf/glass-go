@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CollectionMap from "@/components/CollectionMap";
 import CollectionFAQ from "@/components/CollectionFAQ";
+import CoverageChecker from "@/components/CoverageChecker";
 import { MapPin, Rocket } from "lucide-react";
 
 const quartiers = [
