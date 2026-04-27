@@ -8,7 +8,7 @@ const faqs = [
   },
   {
     q: "Quels sont les horaires de collecte ?",
-    a: "Nos tournées s'effectuent du lundi au samedi, entre 7h et 17h. Vous recevez un SMS la veille de votre passage pour sortir votre box.",
+    a: "Nos tournées s'effectuent le dimanche, après 13h. Vous recevez un SMS la veille de votre passage pour sortir votre box.",
   },
   {
     q: "Quels types de verre sont acceptés ?",
