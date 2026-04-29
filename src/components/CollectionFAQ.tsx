@@ -22,6 +22,10 @@ const faqs = [
     q: "Que faire si ma box est pleine avant le prochain passage ?",
     a: "Pas de souci ! Demandez un ramassage express via le bouton « Demander mon ramassage » ou contactez-nous sur WhatsApp. Nous passons sous 48h selon les disponibilités.",
   },
+  {
+    q: "Comment bien utiliser le vérificateur d'adresse ?",
+    a: "Pour obtenir le bon résultat dans « Vérifier si je suis desservi », suivez ces conseils :\n\n1) Tapez d'abord le nom de votre commune (ex : Petit-Bourg, Baie-Mahault, Lamentin).\n2) Si vous n'obtenez pas de réponse précise, ajoutez votre quartier ou section (ex : Montebello, Carrère, Duquerry, Bovis, La Lézarde).\n3) Pas besoin d'accents ni de majuscules — « pointe a bacchus » fonctionne aussi bien que « Pointe-à-Bacchus ».\n4) Évitez les numéros de rue et codes postaux : seuls la commune et le quartier sont pris en compte.\n5) Trois résultats possibles : ✅ desservi, 🚀 bientôt disponible, ou ❌ pas encore couvert — dans ce dernier cas, écrivez-nous, on étend la zone régulièrement !",
+  },
 ];
 
 const CollectionFAQ = () => {
