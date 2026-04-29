@@ -52,7 +52,7 @@ const CollectionFAQ = () => {
                 <AccordionTrigger className="text-left text-foreground font-semibold hover:no-underline">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-base" style={{ fontFamily: "var(--font-body)" }}>
+                <AccordionContent className="text-muted-foreground text-base whitespace-pre-line" style={{ fontFamily: "var(--font-body)" }}>
                   {item.a}
                 </AccordionContent>
               </AccordionItem>
