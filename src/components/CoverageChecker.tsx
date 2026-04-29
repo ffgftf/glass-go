@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, CheckCircle2, XCircle, MapPin } from "lucide-react";
+import { Search, CheckCircle2, XCircle, MapPin, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -44,7 +44,18 @@ const SOON = [
   "morne-a-l-eau",
 ];
 
-type Status = "idle" | "covered" | "soon" | "not-covered";
+type Status = "idle" | "covered" | "soon" | "not-covered" | "invalid";
+
+// Détecte une entrée non exploitable : trop courte, chiffres seuls, code postal, caractères non-lettres
+const looksInvalid = (raw: string) => {
+  const trimmed = raw.trim();
+  if (trimmed.length < 3) return true;
+  // Que des chiffres / espaces / ponctuation (ex: "97170", "12 rue")
+  if (!/[a-zA-ZÀ-ÿ]{3,}/.test(trimmed)) return true;
+  // Code postal seul
+  if (/^\d{4,5}$/.test(trimmed)) return true;
+  return false;
+};
 
 const normalize = (s: string) =>
   s
@@ -63,6 +74,10 @@ const CoverageChecker = () => {
     const q = normalize(query);
     if (!q) {
       setStatus("idle");
+      return;
+    }
+    if (looksInvalid(query)) {
+      setStatus("invalid");
       return;
     }
     if (COVERED.some((c) => q.includes(normalize(c)))) {
