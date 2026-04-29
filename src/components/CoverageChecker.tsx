@@ -146,26 +146,52 @@ const CoverageChecker = () => {
         )}
 
         {status === "soon" && (
-          <div className="flex items-start gap-3 rounded-xl bg-accent border border-border p-4">
-            <MapPin className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-foreground">Bientôt disponible 🚀</p>
-              <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
-                Votre zone fait partie de notre prochaine vague de déploiement. Laissez-nous vos coordonnées pour être prévenu(e).
+          <div className="rounded-xl bg-accent border border-border p-4 space-y-3">
+            <div className="flex items-start gap-3">
+              <MapPin className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-foreground">Bientôt disponible 🚀</p>
+                <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
+                  Votre zone fait partie de notre prochaine vague de déploiement.
+                </p>
+              </div>
+            </div>
+            <div className="rounded-lg bg-background/60 border border-border p-3">
+              <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-1">Prochaine étape</p>
+              <p className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+                Rejoignez la liste d'attente : on vous prévient dès l'ouverture de votre zone.
               </p>
             </div>
+            <Button asChild className="w-full rounded-xl">
+              <a href="/contact?sujet=liste-attente" onClick={() => setOpen(false)}>
+                Rejoindre la liste d'attente
+              </a>
+            </Button>
           </div>
         )}
 
         {status === "not-covered" && (
-          <div className="flex items-start gap-3 rounded-xl bg-muted border border-border p-4">
-            <XCircle className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-foreground">Pas encore desservi</p>
-              <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
-                Nous ne passons pas encore dans cette zone, mais écrivez-nous : on couvre toute la Guadeloupe d'ici 2027 ! 🌴
+          <div className="rounded-xl bg-muted border border-border p-4 space-y-3">
+            <div className="flex items-start gap-3">
+              <XCircle className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-foreground">Pas encore desservi</p>
+                <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
+                  Cette zone n'est pas encore dans notre planning, mais on couvre toute la Guadeloupe d'ici 2027 ! 🌴
+                </p>
+              </div>
+            </div>
+            <div className="rounded-lg bg-background/60 border border-border p-3">
+              <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-1">Prochaine étape</p>
+              <p className="text-sm text-muted-foreground" style={{ fontFamily: "var(--font-body)" }}>
+                Contactez-nous pour signaler votre intérêt — chaque demande nous aide à prioriser les nouvelles zones.
               </p>
             </div>
+            <Button asChild variant="outline" className="w-full rounded-xl">
+              <a href="/contact?sujet=zone-non-couverte" onClick={() => setOpen(false)}>
+                Nous contacter
+              </a>
+            </Button>
           </div>
         )}
 
