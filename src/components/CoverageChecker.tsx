@@ -168,6 +168,19 @@ const CoverageChecker = () => {
             </div>
           </div>
         )}
+
+        {status === "invalid" && (
+          <div className="flex items-start gap-3 rounded-xl bg-destructive/10 border border-destructive/30 p-4">
+            <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-foreground">Saisie non reconnue</p>
+              <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
+                Merci d'indiquer uniquement un <strong>nom de commune</strong> ou de <strong>quartier</strong> (ex : « Petit-Bourg » ou « Montebello »).
+                Évitez les numéros de rue et les codes postaux — ils ne nous permettent pas de localiser votre zone.
+              </p>
+            </div>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
