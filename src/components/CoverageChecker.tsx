@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, CheckCircle2, XCircle, MapPin } from "lucide-react";
+import { Search, CheckCircle2, XCircle, MapPin, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -44,7 +44,18 @@ const SOON = [
   "morne-a-l-eau",
 ];
 
-type Status = "idle" | "covered" | "soon" | "not-covered";
+type Status = "idle" | "covered" | "soon" | "not-covered" | "invalid";
+
+// Détecte une entrée non exploitable : trop courte, chiffres seuls, code postal, caractères non-lettres
+const looksInvalid = (raw: string) => {
+  const trimmed = raw.trim();
+  if (trimmed.length < 3) return true;
+  // Que des chiffres / espaces / ponctuation (ex: "97170", "12 rue")
+  if (!/[a-zA-ZÀ-ÿ]{3,}/.test(trimmed)) return true;
+  // Code postal seul
+  if (/^\d{4,5}$/.test(trimmed)) return true;
+  return false;
+};
 
 const normalize = (s: string) =>
   s
@@ -63,6 +74,10 @@ const CoverageChecker = () => {
     const q = normalize(query);
     if (!q) {
       setStatus("idle");
+      return;
+    }
+    if (looksInvalid(query)) {
+      setStatus("invalid");
       return;
     }
     if (COVERED.some((c) => q.includes(normalize(c)))) {
@@ -149,6 +164,19 @@ const CoverageChecker = () => {
               <p className="font-semibold text-foreground">Pas encore desservi</p>
               <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
                 Nous ne passons pas encore dans cette zone, mais écrivez-nous : on couvre toute la Guadeloupe d'ici 2027 ! 🌴
+              </p>
+            </div>
+          </div>
+        )}
+
+        {status === "invalid" && (
+          <div className="flex items-start gap-3 rounded-xl bg-destructive/10 border border-destructive/30 p-4">
+            <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-foreground">Saisie non reconnue</p>
+              <p className="text-sm text-muted-foreground mt-1" style={{ fontFamily: "var(--font-body)" }}>
+                Merci d'indiquer uniquement un <strong>nom de commune</strong> ou de <strong>quartier</strong> (ex : « Petit-Bourg » ou « Montebello »).
+                Évitez les numéros de rue et les codes postaux — ils ne nous permettent pas de localiser votre zone.
               </p>
             </div>
           </div>
