@@ -11,6 +11,12 @@ import { useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = "ekoboko_signup_draft";
 
+const FORMULES: Record<string, { label: string; prix: string }> = {
+  basic: { label: "Basic", prix: "7,50 € / semaine" },
+  standard: { label: "Standard", prix: "19,90 € / mois" },
+  "infini-pro": { label: "Infini Pro", prix: "29,90 € / mois" },
+};
+
 const emptyForm = {
   nom: "",
   prenom: "",
