@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
+import { useState } from "react";
+import SignupDialog from "@/components/SignupDialog";
+
+const STORAGE_KEY = "ekoboko_signup_draft";
 
 const plans = [
   {
