@@ -187,9 +187,24 @@ const SignupDialog = ({ open, onOpenChange }: SignupDialogProps) => {
               </SelectContent>
             </Select>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Frais d'inscription annuels : 10€ (inclut le prêt de la boîte)
-          </p>
+          {formData.formule && (
+            <div className="rounded-xl border border-border bg-accent/40 p-4 space-y-2">
+              <p className="font-semibold text-foreground text-sm">Récapitulatif à régler</p>
+              <div className="flex justify-between text-sm text-foreground">
+                <span>{FORMULES[formData.formule].label}</span>
+                <span className="font-semibold">{FORMULES[formData.formule].prix}</span>
+              </div>
+              <div className="flex justify-between text-sm text-foreground">
+                <span>Frais d'inscription annuels (box incluse)</span>
+                <span className="font-semibold">10,00 €</span>
+              </div>
+              <p className="text-xs text-muted-foreground pt-1 border-t border-border">
+                Aucun paiement en ligne pour le moment : le règlement se fait par virement
+                ou en espèces lors du premier passage. Nous vous recontactons après votre inscription.
+              </p>
+            </div>
+          )}
+
           <Button type="submit" variant="hero" className="w-full" disabled={loading || redirecting}>
             {loading ? "Création du compte..." : redirecting ? "Redirection..." : "Valider mon inscription"}
           </Button>
