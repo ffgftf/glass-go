@@ -7,6 +7,7 @@ const STORAGE_KEY = "ekoboko_signup_draft";
 
 const plans = [
   {
+    id: "basic",
     name: "Basic",
     price: "7,50",
     period: "/ semaine",
@@ -22,6 +23,7 @@ const plans = [
     popular: false,
   },
   {
+    id: "standard",
     name: "Standard",
     price: "19,90",
     period: "/ mois",
@@ -41,6 +43,7 @@ const plans = [
     popular: true,
   },
   {
+    id: "infini-pro",
     name: "Infini Pro",
     price: "29,90",
     period: "/ mois",
@@ -60,6 +63,19 @@ const plans = [
   },
 ];
 const Pricing = () => {
+  const [signupOpen, setSignupOpen] = useState(false);
+
+  const handleChoose = (planId: string) => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const draft = saved ? JSON.parse(saved) : {};
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...draft, formule: planId }));
+    } catch {
+      // ignore
+    }
+    setSignupOpen(true);
+  };
+
   return (
     <section className="py-24 bg-card" id="tarifs">
       <div className="container mx-auto px-6">
@@ -112,6 +128,7 @@ const Pricing = () => {
                 variant={plan.popular ? "hero" : "hero-outline"}
                 size="lg"
                 className="w-full py-6"
+                onClick={() => handleChoose(plan.id)}
               >
                 Choisir cette offre
               </Button>
@@ -126,6 +143,8 @@ const Pricing = () => {
           </p>
         </div>
       </div>
+
+      <SignupDialog open={signupOpen} onOpenChange={setSignupOpen} />
     </section>
   );
 };
