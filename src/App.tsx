@@ -11,6 +11,7 @@ import Contact from "./pages/Contact.tsx";
 import AppMobile from "./pages/AppMobile.tsx";
 import Connexion from "./pages/Connexion.tsx";
 import TableauDeBord from "./pages/TableauDeBord.tsx";
+import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/app" element={<AppMobile />} />
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/tableau-de-bord" element={<TableauDeBord />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
