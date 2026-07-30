@@ -33,6 +33,7 @@ const App = () => (
           <Route path="/app" element={<AppMobile />} />
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/tableau-de-bord" element={<TableauDeBord />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
